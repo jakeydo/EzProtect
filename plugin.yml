@@ -1,0 +1,10 @@
+name: EzProtect
+main: EzProtect\Main
+version: 1.0.0
+api: [1.0.0]
+
+commands:
+ ezprotect:
+  description: "EzProtect"
+  usage: "/ezprotect"
+  permission: ezprotect.ezprotect
