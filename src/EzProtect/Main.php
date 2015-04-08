@@ -62,7 +62,15 @@ class Main extends PluginBase implements Listener{
           $this->getLogger()->info("X: ".$event->getBlock()->getFloorX());
           $this->getLogger()->info("Y: ".$event->getBlock()->getFloorY());
           $this->getLogger()->info("Z: ".$event->getBlock()->getFloorZ());
-          $event->setCancelled();
+
+          $player = $event->getPlayer();
+
+          if(!(strtolower($player->getName()) === "jake")){
+            $player->sendMessage("Only Jake can break this stuff");
+            $event->setCancelled();
+          }
+
+
 
           return true;
         }
