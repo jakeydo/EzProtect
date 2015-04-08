@@ -7,8 +7,11 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\network\protocol\ChatPacket;
 use pocketmine\Player;
+use pocketmine\event\Listener;
+use pocketmine\event\block\BlockBreakEvent;
 
-class Main extends PluginBase{
+
+class Main extends PluginBase implements Listener{
 
         public function onLoad(){
                 $this->getLogger()->info("onLoad() has been called in EzProtect!");
@@ -16,6 +19,7 @@ class Main extends PluginBase{
 
         public function onEnable(){
                 $this->getLogger()->info("onEnable() has been called in EzProtect!");
+                $this->getServer()->getPluginManager()->registerEvents($this,$this);
         }
 
         public function onDisable(){
@@ -27,20 +31,41 @@ class Main extends PluginBase{
                 // Execute logic
                 // $this->getLogger()->info("You called the EzProtect command! Good work!");
 
-                if($sender instanceof Player){
-                  $senderName = $sender->getName();
-                  // $pk = new ChatPacket();
-                  // $pk->message = "You called the EzProtect command! Good work, " . $senderName . "!";
-                  // $sender->dataPacket($pk);
-                  $sender->sendMessage("You called the EzProtect command!!! Good work, " . $senderName . "!");
-                }
-                else{
-                  $this->getLogger()->info("Not a player called the EzProtect command.");
-                }
+                  if($sender instanceof Player){
+                    $senderName = $sender->getName();
+                    // $pk = new ChatPacket();
+                    // $pk->message = "You called the EzProtect command! Good work, " . $senderName . "!";
+                    // $sender->dataPacket($pk);
+                    $sender->sendMessage("You called the EzProtect command!!! Good work, " . $senderName . "!");
+                  }
+                  else{
+                    $sender->sendMessage("Not a player called the EzProtect command.");
+                  }
 
                 return true;
+                }
         }
 
-    return false;
-}
+        public function onBlockBreak(BlockBreakEvent $event){
+
+          // foreach($this->getConfig()->get("levels") as $levels){
+          //     if($levels === $event->getPlayer()->getLevel()->getName()){
+          //         if($event->getPlayer()->hasPermission("globalshield.action.break")){
+          //         }
+          //         else{
+          //             $event->setCancelled();
+          //         }
+          //     }
+          // }
+
+          $this->getLogger()->info("A BlockBreakEvent happened: ". $event->getEventName());
+          $this->getLogger()->info("X: ".$event->getBlock()->getFloorX());
+          $this->getLogger()->info("Y: ".$event->getBlock()->getFloorY());
+          $this->getLogger()->info("Z: ".$event->getBlock()->getFloorZ());
+          $event->setCancelled();
+
+          return true;
+        }
+
+    // return false;
 }
