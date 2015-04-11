@@ -4,6 +4,9 @@
 
 EzProtect is an easy plugin for PocketMine to protect builds. It assigns a certain portion of the world to a player, allowing only that player to place or destroy blocks. It ignores height.
 
+
+Currently only allows a player named "Jake" to destroy blocks throughout the entire world.
+
 1. Install the Devtools plugin
 2. Put the EzProtect folder inside the \plugins\ folder
 3. Stop the server
